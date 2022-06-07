@@ -1,31 +1,43 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import html2canvas from 'html2canvas';
 	import { jsPDF } from 'jspdf';
 
+	let innerHeight: number;
+	let innerWidth: number;
+
 	let divToPdf;
+
 	onMount(() => {
 		JsBarcode('#barcode')
 			.EAN13('493107890128', { height: 40, fontSize: 18, textMargin: 0 })
 			.render();
 
 		divToPdf = () => {
-			var doc = new jsPDF();
-			const content =
-				`<html><head><title>NFTLBookie</title></head><body>` +
-				document.getElementById('base').innerHTML +
-				`</body></html>`;
-			html2canvas(document.querySelector('#capture')).then((canvas) => {
-				document.body.appendChild(canvas);
+			let orientation: string = innerWidth > innerHeight ? 'landscape' : 'portrait';
+			const ticket = document.getElementById('base');
+			var doc = new jsPDF({
+				orientation: orientation,
+				format: [innerWidth / 4, innerHeight / 4]
+			});
+			html2canvas(ticket).then(function (canvas) {
+				const jose = document.body.appendChild(canvas);
+				doc.addImage(jose, 'JPEG', 0, 0, innerWidth / 4, innerHeight / 4);
+				doc.save('test.pdf');
+				jose.remove();
 			});
 		};
 	});
 </script>
 
-<!--
-Inspired by: https://dribbble.com/shots/1166639-Movie-Ticket/attachments/152161
--->
-<section id="base" class=" flex items-center justify-center text-stone-700">
-	<div on:click={divToPdf} id="ticket" class="ticket --flex-column ">
+<svelte:window bind:innerHeight bind:innerWidth />
+
+<section id="base" class=" ">
+    <div class='text-white flex items-center justify-center py-7 italic text-xl tracking-wide'>
+        Thanks for playing!
+    </div>
+    <div class="flex items-center justify-center text-stone-700">
+	<div on:click={divToPdf} id="ticket" class="ticket ">
 		<div class="top --flex-column">
 			<div>
 				<img src="NFTL.webp" alt="logo" class="mr-2 w-7 float-left ml-3" />
@@ -37,8 +49,8 @@ Inspired by: https://dribbble.com/shots/1166639-Movie-Ticket/attachments/152161
 				Madrid <span class="font-thin text-sm non-italic"> vs</span> LiverPool
 			</div>
 			<img src="/nftl.png" alt="ticket illustration" />
-			<div class="deetz --flex-row-j!sb ml-3">
-				<div class="event --flex-column">
+			<div class="deetz  ml-3">
+				<div class="event ">
 					<p class="font-semithin text-sm">
 						You betted for
 						<br />
@@ -46,7 +58,7 @@ Inspired by: https://dribbble.com/shots/1166639-Movie-Ticket/attachments/152161
 					<p class=" font-bold text-xl italic -mt-2 pb-5">Madrid Winner!</p>
 					<div class="text-xs">0xb47e..93BBB</div>
 				</div>
-				<div class="price --flex-column text-right mr-3">
+				<div class="price  text-right mr-3">
 					<p class="italic text-xl font-bold">
 						<span class="text-sm font-normal">$NFTL</span>30000
 					</p>
@@ -54,10 +66,11 @@ Inspired by: https://dribbble.com/shots/1166639-Movie-Ticket/attachments/152161
 			</div>
 		</div>
 		<div class="rip " />
-		<div class="bottom --flex-row-j!sb pl-1">
+		<div class="bottom  pl-1">
 			<svg id="barcode" />
 		</div>
 	</div>
+</div>
 </section>
 
 <style>

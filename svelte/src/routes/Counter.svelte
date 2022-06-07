@@ -18,7 +18,7 @@
 	}
 </script>
 
-<div class="counter text-white  w-64 rounded-lg text-center mx-auto bg-orange-500">
+<div class="counter text-white  w-52 rounded-lg text-center mx-auto bg-orange-500">
 	<button on:click={() => (ticktNb -= 1)} aria-label="Decrease the counter by one">
 		<svg aria-hidden="true" viewBox="0 0 1 1">
 			<path d="M0,0.5 L1,0.5" />
@@ -48,6 +48,8 @@
 		display: flex;
 		border-top: 1px solid rgba(0, 0, 0, 0.1);
 		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+		
+		
 	}
 
 	.counter button {
@@ -81,7 +83,7 @@
 
 	.counter-viewport {
 		width: 8em;
-		height: 4em;
+		height: 3.5em;
 		overflow: hidden;
 		text-align: center;
 		position: relative;
@@ -94,7 +96,7 @@
 		height: 100%;
 		font-weight: 400;
 		color: var(--accent-color);
-		font-size: 4rem;
+		font-size: 3rem;
 		align-items: center;
 		justify-content: center;
 	}

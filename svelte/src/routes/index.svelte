@@ -8,6 +8,7 @@
 	import ButtonsVote from './ButtonsVote.svelte';
 	import ButtonBuy from './ButtonBuy.svelte';
 	import { goto } from '$app/navigation';
+import TwitterLink from './components/home/TwitterLink.svelte';
 	const subContractAddress = '0x81663d5149cADBbc48CF1a7F21b05719Ee1420A9';
 	const subContractAbi = [
 		{
@@ -303,23 +304,17 @@
 
 	<div class="py-20 flex items-center justify-center">
 		<div class="mx-10 text-center">
-			<ButtonsVote color="#f1c40f" text="Madrid" bind:selecedTeam teamNb="1" />
-			<p class=" font-thin text-xs -mb-1.5">cote:</p>
-			<p class="font-bold text-xl">3,4</p>
+			<ButtonsVote color="#f1c40f" text="Madrid" bind:selecedTeam teamNb="1" pourcent=20 cote=3.4/>
 		</div>
 		<div class="mx-10 text-center">
-			<ButtonsVote color="rgb(2, 64, 2)" text="null" bind:selecedTeam teamNb="3" />
-			<p class=" font-thin text-xs -mb-1.5">cote:</p>
-			<p class="font-bold text-xl">2,2</p>
+			<ButtonsVote color="rgb(2, 64, 2)" text="null" bind:selecedTeam teamNb="3" pourcent=10 cote=2/>
 		</div>
 		<div class="mx-10 text-center">
-			<ButtonsVote color="#e74c3c" text="LiverPool" bind:selecedTeam teamNb="2" />
-			<p class=" font-thin text-xs -mb-1.5">cote:</p>
-			<p class="font-bold text-xl">1,2</p>
+			<ButtonsVote color="#e74c3c" text="LiverPool" bind:selecedTeam teamNb="2" pourcent=70 cote=1.2/>
 		</div>
 	</div>
 	<Counter bind:ticktNb />
-	<div class="text-center text-white pt-2 font-thin text-sm">
+	<div class="text-center text-white pt-2 font-thin text-xs">
 		price:
 		<!-- {trad.ticket_price}: ${lottery.ticket_price}NFTL -->
 	</div>
@@ -347,40 +342,10 @@
 			</button>
 		</a>
 	</div>
-	<div class="flex py-5">
-		<div class="flex items-end justify-start px-10">
-			<div class="w-5 text-white mr-2">
-				<svg viewBox="0 0 448 512"
-					><path
-						fill="currentColor"
-						d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-48.9 158.8c.2 2.8.2 5.7.2 8.5c0 86.7-66 186.6-186.6 186.6c-37.2 0-71.7-10.8-100.7-29.4c5.3.6 10.4.8 15.8.8c30.7 0 58.9-10.4 81.4-28c-28.8-.6-53-19.5-61.3-45.5c10.1 1.5 19.2 1.5 29.6-1.2c-30-6.1-52.5-32.5-52.5-64.4v-.8c8.7 4.9 18.9 7.9 29.6 8.3a65.447 65.447 0 0 1-29.2-54.6c0-12.2 3.2-23.4 8.9-33.1c32.3 39.8 80.8 65.8 135.2 68.6c-9.3-44.5 24-80.6 64-80.6c18.9 0 35.9 7.9 47.9 20.7c14.8-2.8 29-8.3 41.6-15.8c-4.9 15.2-15.2 28-28.8 36.1c13.2-1.4 26-5.1 37.8-10.2c-8.9 13.1-20.1 24.7-32.9 34z"
-					/></svg
-				>
-			</div>
-			<p class="inline italic">@llPekoll</p>
-		</div>
-		<div class="flex items-center justify-center px-10">
-			<div class="w-5 text-white mr-2">
-				<svg viewBox="0 0 448 512"
-					><path
-						fill="currentColor"
-						d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-48.9 158.8c.2 2.8.2 5.7.2 8.5c0 86.7-66 186.6-186.6 186.6c-37.2 0-71.7-10.8-100.7-29.4c5.3.6 10.4.8 15.8.8c30.7 0 58.9-10.4 81.4-28c-28.8-.6-53-19.5-61.3-45.5c10.1 1.5 19.2 1.5 29.6-1.2c-30-6.1-52.5-32.5-52.5-64.4v-.8c8.7 4.9 18.9 7.9 29.6 8.3a65.447 65.447 0 0 1-29.2-54.6c0-12.2 3.2-23.4 8.9-33.1c32.3 39.8 80.8 65.8 135.2 68.6c-9.3-44.5 24-80.6 64-80.6c18.9 0 35.9 7.9 47.9 20.7c14.8-2.8 29-8.3 41.6-15.8c-4.9 15.2-15.2 28-28.8 36.1c13.2-1.4 26-5.1 37.8-10.2c-8.9 13.1-20.1 24.7-32.9 34z"
-					/></svg
-				>
-			</div>
-			<p class="inline italic">@FinanceFr</p>
-		</div>
-		<div class="flex items-center justify-center px-10">
-			<div class="w-5 text-white mr-2">
-				<svg viewBox="0 0 448 512"
-					><path
-						fill="currentColor"
-						d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-48.9 158.8c.2 2.8.2 5.7.2 8.5c0 86.7-66 186.6-186.6 186.6c-37.2 0-71.7-10.8-100.7-29.4c5.3.6 10.4.8 15.8.8c30.7 0 58.9-10.4 81.4-28c-28.8-.6-53-19.5-61.3-45.5c10.1 1.5 19.2 1.5 29.6-1.2c-30-6.1-52.5-32.5-52.5-64.4v-.8c8.7 4.9 18.9 7.9 29.6 8.3a65.447 65.447 0 0 1-29.2-54.6c0-12.2 3.2-23.4 8.9-33.1c32.3 39.8 80.8 65.8 135.2 68.6c-9.3-44.5 24-80.6 64-80.6c18.9 0 35.9 7.9 47.9 20.7c14.8-2.8 29-8.3 41.6-15.8c-4.9 15.2-15.2 28-28.8 36.1c13.2-1.4 26-5.1 37.8-10.2c-8.9 13.1-20.1 24.7-32.9 34z"
-					/></svg
-				>
-			</div>
-			<p class="inline italic ">@Dragan</p>
-		</div>
+	<div class="flex items-center justify-center py-5">
+		<TwitterLink link="https://twitter.com/llpekoll" displayName="@peko" />
+		<TwitterLink link="https://twitter.com/FinanceFr" displayName="@FinanceFr" />
+		<TwitterLink link="https://twitter.com/dragan" displayName="@Dragan" />
 	</div>
 </section>
 

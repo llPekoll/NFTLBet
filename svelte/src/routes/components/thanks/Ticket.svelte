@@ -33,44 +33,44 @@
 <svelte:window bind:innerHeight bind:innerWidth />
 
 <section id="base" class=" ">
-    <div class='text-white flex items-center justify-center py-7 italic text-xl tracking-wide'>
-        Thanks for playing!
-    </div>
-    <div class="flex items-center justify-center text-stone-700">
-	<div on:click={divToPdf} id="ticket" class="ticket ">
-		<div class="top --flex-column">
-			<div>
-				<img src="NFTL.webp" alt="logo" class="mr-2 w-7 float-left ml-3" />
-				<p class="pt-6 font-bold italic text-sm">
-					NFTL<span class="font-thin text-slate-700">Bookie</span>
-				</p>
-			</div>
-			<div class="tourname clear-both ml-3 text-xl font-bold italic">
-				Madrid <span class="font-thin text-sm non-italic"> vs</span> LiverPool
-			</div>
-			<img src="/nftl.png" alt="ticket illustration" />
-			<div class="deetz  ml-3">
-				<div class="event ">
-					<p class="font-semithin text-sm">
-						You betted for
-						<br />
-					</p>
-					<p class=" font-bold text-xl italic -mt-2 pb-5">Madrid Winner!</p>
-					<div class="text-xs">0xb47e..93BBB</div>
-				</div>
-				<div class="price  text-right mr-3">
-					<p class="italic text-xl font-bold">
-						<span class="text-sm font-normal">$NFTL</span>30000
+	<div class="text-white flex items-center justify-center py-7 italic text-xl tracking-wide">
+		Thanks for playing!
+	</div>
+	<div class="flex items-center justify-center text-stone-700">
+		<div on:click={divToPdf} id="ticket" class="ticket ">
+			<div class="top --flex-column">
+				<div>
+					<img src="NFTL.webp" alt="logo" class="mr-2 w-7 float-left ml-3" />
+					<p class="pt-6 font-bold italic text-sm">
+						NFTL<span class="font-thin text-slate-700">Bookie</span>
 					</p>
 				</div>
+				<div class="tourname clear-both ml-3 text-xl font-bold italic">
+					Madrid <span class="font-thin text-sm non-italic"> vs</span> LiverPool
+				</div>
+				<img src="/nftl.png" alt="ticket illustration" />
+				<div class="deetz  ml-3">
+					<div class="event ">
+						<p class="font-semithin text-sm">
+							You betted for
+							<br />
+						</p>
+						<p class=" font-bold text-xl italic -mt-2 pb-5">Madrid Winner!</p>
+						<div class="text-xs">0xb47e..93BBB</div>
+					</div>
+					<div class="price  text-right mr-3">
+						<p class="italic text-xl font-bold">
+							<span class="text-sm font-normal">$NFTL</span>30000
+						</p>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="rip " />
-		<div class="bottom  pl-1">
-			<svg id="barcode" />
+			<div class="rip " />
+			<div class="bottom  pl-1">
+				<svg id="barcode" />
+			</div>
 		</div>
 	</div>
-</div>
 </section>
 
 <style>

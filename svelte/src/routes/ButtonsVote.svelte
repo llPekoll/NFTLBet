@@ -3,38 +3,40 @@
 	export let text: string = 'willmase';
 	export let selecedTeam: number;
 	export let teamNb: number;
-    export let pourcent: number;
-    export let cote:number;
-    const clicked = () => {
-		console.log(selecedTeam);
-		console.log(teamNb);
+	export let pourcent: number;
+	export let cote: number;
+	export let display: string;
+	const clicked = () => {
 		selecedTeam = teamNb;
 	};
 	// $: selecedTeam = 33
 </script>
+
 <p class="font-light italic text-xs ">cote:</p>
 <p class="text-white font-bold -mt-2 text-lg">{cote}</p>
 <button
-style="--theme-color: {color}"
-on:click={() => {
-    selecedTeam = teamNb;
-}}
+	style="--theme-color: {color}"
+	on:click={() => {
+		selecedTeam = teamNb;
+	}}
 	class:selected={selecedTeam == teamNb}
 	class="btn py-3 px-10 extra text-white"
-	>
-    <p class="text-xl">{text}</p>
+>
+	<p class="text-xl">{text}</p>
 </button>
-<div class="flex py-2">
-    <div class="text-xs">{pourcent}%</div>
-    <div class=" jj w-full bg-gray-600 rounded-full h-1.5 ml-1">
-      <div class="bg-gray-200 h-1.5 rounded-full " style="width: {pourcent}% "></div>
-    </div>
-</div>
+{#if display}
+	<div class="flex py-2">
+		<div class="text-xs">{pourcent}%</div>
+		<div class=" jj w-full bg-gray-600 rounded-full h-1.5 ml-1">
+			<div class="bg-gray-200 h-1.5 rounded-full " style="width: {pourcent}% " />
+		</div>
+	</div>
+{/if}
 
 <style>
-    .jj{
-        margin-top: 0.3rem
-    }
+	.jj {
+		margin-top: 0.3rem;
+	}
 	.btn {
 		box-sizing: border-box;
 		-webkit-appearance: none;

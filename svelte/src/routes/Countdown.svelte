@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-    // import {FlipDown} from 'flipdown/src/flipdown.js';
+	export let time;
 
 	onMount(() => {
-		var twoDaysFromNow = new Date().getTime() / 1000 + 86400 * 2 + 1;
-		var flipdown = new FlipDown(twoDaysFromNow);
+		var flipdown = new FlipDown(time);
 		flipdown.start();
 	});
 </script>

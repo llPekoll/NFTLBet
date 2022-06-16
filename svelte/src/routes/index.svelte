@@ -296,7 +296,7 @@
 	};
 	const peko = `@${trad.peko}`;
 	const finance = `@${trad.finance}`;
-	const dragan = `@${trad.dragan}`;
+	// const dragan = `@${trad.dragan}`;
 </script>
 
 <section class="text-slate-300">
@@ -395,7 +395,7 @@
 	<div class="flex items-center justify-center py-5">
 		<TwitterLink link={trad.peko_link} displayName={peko} />
 		<TwitterLink link={trad.finance_link} displayName={finance} />
-		<TwitterLink link={trad.dragan_link} displayName={dragan} />
+		<!-- <TwitterLink link={trad.dragan_link} displayName={dragan} /> -->
 	</div>
 	<div class="text-sm p-3 font-light">
 		{trad.conditions}

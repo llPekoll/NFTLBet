@@ -25,10 +25,13 @@ SECRET_KEY = "qvsh*8pucko*%^02v-6&w*hwjm%mr0%)0wmfkg-d1f@(vd&p92"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
+
+ALLOWED_HOSTS = ['http://admin.nftlbet.com', 'localhost']
+
+CSRF_TRUSTED_ORIGINS = ['http://admin.nftlbet.com']
 
 INSTALLED_APPS = [
     "bookie",
@@ -115,13 +118,4 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 
-CSRF_TRUSTED_ORIGINS = [
-    'http://admin.nftlbet.com'
-],
-ALLOWED_HOSTS = [
-    'nftlbet',
-    'admin.nftlbet',
-],
-CORS_ORIGIN_WHITELIST = [
-    'http://admin.nftlbet.com',
-]
+STATIC_ROOT = "/opt/aa/webroot/"

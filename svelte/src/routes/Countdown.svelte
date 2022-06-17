@@ -1,10 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	export let time;
+	export let hasFinied
 
 	onMount(() => {
-		var flipdown = new FlipDown(time);
-		flipdown.start();
+		var flipdown = new FlipDown(time).start().ifEnded(() => {
+			hasFinied = true
+    		console.log("The countdown has ended!");
+  });;
+		
 	});
 </script>
 

@@ -243,6 +243,7 @@
 	let ticktNb;
 	let SendTransactionNFTL;
 	let selecedTeam = '1';
+	let hasFinied = false;
 	onMount(async () => {
 		provider = new ethers.providers.Web3Provider(window.ethereum);
 		SendTransactionNFTL = async () => {
@@ -297,9 +298,13 @@
 	const peko = `@${trad.peko}`;
 	const finance = `@${trad.finance}`;
 	// const dragan = `@${trad.dragan}`;
+	let fullHight = '';
+	$: if(hasFinied){
+		fullHight ="h-screen"
+	}
 </script>
 
-<section class="text-slate-300">
+<section class="text-slate-300 {fullHight}">
 	<div>
 		<div class="opacity-20">
 			<!-- <BgHero /> -->
@@ -328,10 +333,13 @@
 		<div class="-mt-32">
 			<Hero3d />
 		</div>
-		<div class="text-center font-thin -mt-16">{trad.end_game}:</div>
-		<Countdown time={match.start_match_hour} />
+		{#if !hasFinied}
+			<div class="text-center font-thin -mt-16">{trad.end_game}:</div>
+		<Countdown time={match.start_match_hour} bind:hasFinied/>
+		{/if}
 	</div>
 
+	{#if !hasFinied}
 	<div class="py-20 flex items-center justify-center">
 		<div class="mx-10 text-center">
 			<ButtonsVote
@@ -374,15 +382,19 @@
 	<div class="text-center text-white font-bold text-3xl -mt-2 italic">
 		{ticktNb * match.ticket_price}<span class="font-semibold italic text-base ">$NFTL</span>
 	</div>
-
-	<div class="text-center px-30  py-5 ">
-		<button on:click={SendTransactionNFTL} class="drop-shadow-md">
-			<ButtonBuy {trad} />
-		</button>
-	</div>
+		<div class="text-center px-30  py-5 ">
+			<button on:click={SendTransactionNFTL} class="drop-shadow-md">
+				<ButtonBuy {trad} />
+			</button>
+		</div>
+	{/if}
 	<div class="w-full text-center mx-auto py-10">
 		<p class="text-white tracking-widest">
+			{#if !hasFinied}
 			{trad.need_more}
+				{:else}
+				Need some $NFTL
+			{/if}
 		</p>
 		<a href={trad.get_nftl_link}>
 			<button

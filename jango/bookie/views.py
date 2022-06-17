@@ -11,24 +11,43 @@ def get_match(request):
 
     m = model_to_dict(match)
     m["start_match_hour"] = datetime.timestamp(m["start_match_hour"])
+    
     tickets_all = TicketCount.objects.filter(match=match).aggregate(Sum("amount"))
-    tickets1 = TicketCount.objects.filter(match=match, bent_on="team1").aggregate(
-        Sum("amount")
-    )
-    pourcent1 = tickets1["amount__sum"] * 100 / tickets_all["amount__sum"]
-    tickets2 = TicketCount.objects.filter(match=match, bent_on="team2").aggregate(
-        Sum("amount")
-    )
-    pourcent2 = tickets2["amount__sum"] * 100 / tickets_all["amount__sum"]
-    ticketsnull = TicketCount.objects.filter(match=match, bent_on="null").aggregate(
-        Sum("amount")
-    )
-    pourcentnull = ticketsnull["amount__sum"] * 100 / tickets_all["amount__sum"]
+    
+    if tickets_all.get('amount__sum'):
+        tickets1 = TicketCount.objects.filter(match=match, bent_on="team1").aggregate(
+            Sum("amount")
+        )
+        if tickets1.get('amount__sum'):
+            pourcent1 = tickets1["amount__sum"] * 100 / tickets_all["amount__sum"]
+        else:
+            pourcent1 = 0
+        tickets2 = TicketCount.objects.filter(match=match, bent_on="team2").aggregate(
+            Sum("amount")
+        )
+        if tickets2.get('amount__sum'):
+            pourcent2 = tickets2["amount__sum"] * 100 / tickets_all["amount__sum"]
+        else:
+            pourcent2 = 0
+        
+        ticketsnull = TicketCount.objects.filter(match=match, bent_on="null").aggregate(
+            Sum("amount")
+        )
+        if ticketsnull.get('amount__sum'):
+            pourcentnull = ticketsnull["amount__sum"] * 100 / tickets_all["amount__sum"]
+        else:
+            pourcentnull = 0
 
-    m["team1_pourcentage"] = f"{pourcent1:.2f}"
-    m["team2_pourcentage"] = f"{pourcent2:.2f}"
-    m["null_pourcentage"] = f"{pourcentnull:.2f}"
-
+        m["team1_pourcentage"] = f"{pourcent1:.2f}"
+        m["team2_pourcentage"] = f"{pourcent2:.2f}"
+        m["null_pourcentage"] = f"{pourcentnull:.2f}"
+    else:
+        m["team1_pourcentage"] = "0"
+        m["team2_pourcentage"] = "0"
+        m["null_pourcentage"] = "0"
+        m["null_pourcentage"] = "0"
+        m["display_pourcentage"] = False
+        
     return JsonResponse(m)
 
 

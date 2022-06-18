@@ -1,6 +1,8 @@
 <script>
 	import Ticket from './components/thanks/Ticket.svelte';
 	import { onMount } from 'svelte/internal';
+	export let trad = {};
+	export let ticket = {};
 	onMount(() => {
 		if (!window.location.hash) {
 			window.location = window.location + '#loaded';
@@ -10,5 +12,5 @@
 </script>
 
 <section>
-	<Ticket />
+	<Ticket {trad} {ticket}/>
 </section>

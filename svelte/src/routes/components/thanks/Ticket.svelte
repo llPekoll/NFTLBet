@@ -3,16 +3,19 @@
 	import html2canvas from 'html2canvas';
 	import { jsPDF } from 'jspdf';
 
+	export let trad = {};
+	export let ticket = {};
+
 	let innerHeight: number;
 	let innerWidth: number;
 
 	let divToPdf;
-
+	let rand = '';
+	for(let i=0; i<12; ++i) rand += Math.floor(Math.random() * 10);
 	onMount(() => {
 		JsBarcode('#barcode')
-			.EAN13('493107890128', { height: 40, fontSize: 18, textMargin: 0 })
+			.EAN13(rand.toString(), { height: 40, fontSize: 18, textMargin: 0 })
 			.render();
-
 		divToPdf = () => {
 			let orientation: string = innerWidth > innerHeight ? 'landscape' : 'portrait';
 			const ticket = document.getElementById('base');
@@ -23,7 +26,7 @@
 			html2canvas(ticket).then(function (canvas) {
 				const jose = document.body.appendChild(canvas);
 				doc.addImage(jose, 'JPEG', 0, 0, innerWidth / 4, innerHeight / 4);
-				doc.save('test.pdf');
+				doc.save(`${rand.toString()}.pdf`);
 				jose.remove();
 			});
 		};
@@ -31,7 +34,6 @@
 </script>
 
 <svelte:window bind:innerHeight bind:innerWidth />
-
 <section id="base" class=" ">
 	<div class="text-white flex items-center justify-center py-7 italic text-xl tracking-wide">
 		Thanks for playing!
@@ -46,7 +48,7 @@
 					</p>
 				</div>
 				<div class="tourname clear-both ml-3 text-xl font-bold italic">
-					Madrid <span class="font-thin text-sm non-italic"> vs</span> LiverPool
+					{ticket.team1} <span class="font-thin text-sm non-italic"> vs</span> {ticket.team2}
 				</div>
 				<img src="/nftl.png" alt="ticket illustration" />
 				<div class="deetz  ml-3">
@@ -55,12 +57,12 @@
 							You betted for
 							<br />
 						</p>
-						<p class=" font-bold text-xl italic -mt-2 pb-5">Madrid Winner!</p>
-						<div class="text-xs">0xb47e..93BBB</div>
+						<p class=" font-bold text-xl italic -mt-2 pb-5">{ticket.winner} Winner!</p>
+						<div class="text-xs">{ticket.address}</div>
 					</div>
 					<div class="price  text-right mr-3">
 						<p class="italic text-xl font-bold">
-							<span class="text-sm font-normal">$NFTL</span>30000
+							<span class="text-sm font-normal">$NFTL</span>{ticket.amount}
 						</p>
 					</div>
 				</div>

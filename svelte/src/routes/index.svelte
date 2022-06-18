@@ -12,230 +12,9 @@
 
 	export let trad = {};
 	export let match = {};
+	export let abi = {};
 
 	const subContractAddress = '0x81663d5149cADBbc48CF1a7F21b05719Ee1420A9';
-	const subContractAbi = [
-		{
-			constant: true,
-			inputs: [],
-			name: 'name',
-			outputs: [
-				{
-					name: '',
-					type: 'string'
-				}
-			],
-			payable: false,
-			stateMutability: 'view',
-			type: 'function'
-		},
-		{
-			constant: false,
-			inputs: [
-				{
-					name: '_spender',
-					type: 'address'
-				},
-				{
-					name: '_value',
-					type: 'uint256'
-				}
-			],
-			name: 'approve',
-			outputs: [
-				{
-					name: '',
-					type: 'bool'
-				}
-			],
-			payable: false,
-			stateMutability: 'nonpayable',
-			type: 'function'
-		},
-		{
-			constant: true,
-			inputs: [],
-			name: 'totalSupply',
-			outputs: [
-				{
-					name: '',
-					type: 'uint256'
-				}
-			],
-			payable: false,
-			stateMutability: 'view',
-			type: 'function'
-		},
-		{
-			constant: false,
-			inputs: [
-				{
-					name: '_from',
-					type: 'address'
-				},
-				{
-					name: '_to',
-					type: 'address'
-				},
-				{
-					name: '_value',
-					type: 'uint256'
-				}
-			],
-			name: 'transferFrom',
-			outputs: [
-				{
-					name: '',
-					type: 'bool'
-				}
-			],
-			payable: false,
-			stateMutability: 'nonpayable',
-			type: 'function'
-		},
-		{
-			constant: true,
-			inputs: [],
-			name: 'decimals',
-			outputs: [
-				{
-					name: '',
-					type: 'uint8'
-				}
-			],
-			payable: false,
-			stateMutability: 'view',
-			type: 'function'
-		},
-		{
-			constant: true,
-			inputs: [
-				{
-					name: '_owner',
-					type: 'address'
-				}
-			],
-			name: 'balanceOf',
-			outputs: [
-				{
-					name: 'balance',
-					type: 'uint256'
-				}
-			],
-			payable: false,
-			stateMutability: 'view',
-			type: 'function'
-		},
-		{
-			constant: true,
-			inputs: [],
-			name: 'symbol',
-			outputs: [
-				{
-					name: '',
-					type: 'string'
-				}
-			],
-			payable: false,
-			stateMutability: 'view',
-			type: 'function'
-		},
-		{
-			constant: false,
-			inputs: [
-				{
-					name: '_to',
-					type: 'address'
-				},
-				{
-					name: '_value',
-					type: 'uint256'
-				}
-			],
-			name: 'transfer',
-			outputs: [
-				{
-					name: '',
-					type: 'bool'
-				}
-			],
-			payable: false,
-			stateMutability: 'nonpayable',
-			type: 'function'
-		},
-		{
-			constant: true,
-			inputs: [
-				{
-					name: '_owner',
-					type: 'address'
-				},
-				{
-					name: '_spender',
-					type: 'address'
-				}
-			],
-			name: 'allowance',
-			outputs: [
-				{
-					name: '',
-					type: 'uint256'
-				}
-			],
-			payable: false,
-			stateMutability: 'view',
-			type: 'function'
-		},
-		{
-			payable: true,
-			stateMutability: 'payable',
-			type: 'fallback'
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
-					indexed: true,
-					name: 'owner',
-					type: 'address'
-				},
-				{
-					indexed: true,
-					name: 'spender',
-					type: 'address'
-				},
-				{
-					indexed: false,
-					name: 'value',
-					type: 'uint256'
-				}
-			],
-			name: 'Approval',
-			type: 'event'
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
-					indexed: true,
-					name: 'from',
-					type: 'address'
-				},
-				{
-					indexed: true,
-					name: 'to',
-					type: 'address'
-				},
-				{
-					indexed: false,
-					name: 'value',
-					type: 'uint256'
-				}
-			],
-			name: 'Transfer',
-			type: 'event'
-		}
-	];
 
 	let provider;
 	let amount = trad.connect;
@@ -272,11 +51,12 @@
 				wallet,
 				amount: bet_value
 			};
-			await fetch(`/`, {
+			const ret = await fetch(`/`, {
 				method: 'post',
 				body: JSON.stringify(data)
 			});
-			goto('/thanks');
+			const ticket = ret.json()
+			goto(`/thanks?id=${ticket.id}`);
 		};
 	});
 	//     }
@@ -290,7 +70,10 @@
 			});
 
 		account = accounts[0];
-		let subContract = new ethers.Contract(subContractAddress, subContractAbi, provider);
+		console.log(abi);
+		let subContract = new ethers.Contract(subContractAddress, abi, provider);
+		console.log('subContract')
+		console.log(subContract)
 		let bal = await subContract.balanceOf(account);
 		amount = bal.toString() / Math.pow(10, 9);
 		amount = `${amount.toFixed(2)}`;
@@ -340,7 +123,7 @@
 	</div>
 
 	{#if !hasFinied}
-	<div class="py-20 flex items-center justify-center">
+	<div class="py-20 md:flex flex-wrap items-center justify-center">
 		<div class="mx-10 text-center">
 			<ButtonsVote
 				color="#f1c40f"

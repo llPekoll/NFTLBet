@@ -73,7 +73,7 @@ def post_ticket(request):
             bent_on = "team2"
 
         try:
-            TicketCount.objects.create(
+            ticket = TicketCount.objects.create(
                 match=match,
                 address=data["wallet"],
                 amount=data["amount"],
@@ -82,4 +82,18 @@ def post_ticket(request):
         except Exception as e:
             print(e)
             return JsonResponse({"error": str(e)})
-        return JsonResponse({"status": "ok"})
+        return JsonResponse({"id":ticket.id })
+
+def get_ticket(request, pk):
+    ticket = TicketCount.objects.get(pk=pk)
+    ticket_dict = model_to_dict(ticket)
+    ticket_dict['address'] = f"{ticket.address[:6]}....{ticket.address[-6:]}"
+    match = Match.objects.get(pk=ticket.match.id)
+    ticket_dict['team1'] = match.team1_name
+    ticket_dict['team2'] = match.team2_name
+    ticket_dict['winner'] = match.team1_name
+    if ticket.bent_on == 'null':
+        ticket_dict['winner'] = 'null'
+    if ticket.bent_on == 'team2':
+        ticket_dict['winner'] = match.team2_name
+    return JsonResponse(ticket_dict)

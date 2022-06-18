@@ -12,7 +12,7 @@
 	// $: selecedTeam = 33
 </script>
 
-<p class="font-light italic text-xs ">cote:</p>
+<p class="font-light italic text-xs md:pt-0 pt-7">cote:</p>
 <p class="text-white font-bold -mt-2 text-lg">{cote}</p>
 <button
 	style="--theme-color: {color}"
@@ -25,7 +25,7 @@
 	<p class="text-xl">{text}</p>
 </button>
 {#if display}
-	<div class="flex py-2">
+	<div class="flex py-2 md:w-full w-1/3 text-center mx-auto">
 		<div class="text-xs">{pourcent}%</div>
 		<div class=" jj w-full bg-gray-600 rounded-full h-1.5 ml-1">
 			<div class="bg-gray-200 h-1.5 rounded-full " style="width: {pourcent}% " />

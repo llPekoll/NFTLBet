@@ -11,7 +11,7 @@
 
 	let divToPdf;
 	let rand = '';
-	for(let i=0; i<12; ++i) rand += Math.floor(Math.random() * 10);
+	for (let i = 0; i < 12; ++i) rand += Math.floor(Math.random() * 10);
 	onMount(() => {
 		JsBarcode('#barcode')
 			.EAN13(rand.toString(), { height: 40, fontSize: 18, textMargin: 0 })
@@ -48,7 +48,8 @@
 					</p>
 				</div>
 				<div class="tourname clear-both ml-3 text-xl font-bold italic">
-					{ticket.team1} <span class="font-thin text-sm non-italic"> vs</span> {ticket.team2}
+					{ticket.team1} <span class="font-thin text-sm non-italic"> vs</span>
+					{ticket.team2}
 				</div>
 				<img src="/nftl.png" alt="ticket illustration" />
 				<div class="deetz  ml-3">

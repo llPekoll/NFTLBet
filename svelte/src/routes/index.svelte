@@ -272,11 +272,11 @@
 				wallet,
 				amount: bet_value
 			};
-			const ret = await fetch(`/`, {
+			const ret = await fetch(`/query/ticket`, {
 				method: 'post',
 				body: JSON.stringify(data)
 			});
-			const ticket = ret.json()
+			const ticket = await ret.json();
 			goto(`/thanks?id=${ticket.id}`);
 		};
 	});
@@ -299,8 +299,8 @@
 	const peko = `@${trad.peko}`;
 	const finance = `@${trad.finance}`;
 	let fullHight = '';
-	$: if(hasFinied){
-		fullHight ="h-screen"
+	$: if (hasFinied) {
+		fullHight = 'h-screen';
 	}
 </script>
 
@@ -335,53 +335,53 @@
 		</div>
 		{#if !hasFinied}
 			<div class="text-center font-thin -mt-16">{trad.end_game}:</div>
-		<Countdown time={match.start_match_hour} bind:hasFinied/>
+			<Countdown time={match.start_match_hour} bind:hasFinied />
 		{/if}
 	</div>
 
 	{#if !hasFinied}
-	<div class="py-20 md:flex flex-wrap items-center justify-center">
-		<div class="mx-10 text-center">
-			<ButtonsVote
-				color="#f1c40f"
-				text={match.team1_name}
-				bind:selecedTeam
-				teamNb="1"
-				pourcent={match.team1_pourcentage}
-				cote={match.team1_cote}
-				display={match.display_pourcentage}
-			/>
+		<div class="py-20 md:flex flex-wrap items-center justify-center">
+			<div class="mx-10 text-center">
+				<ButtonsVote
+					color="#f1c40f"
+					text={match.team1_name}
+					bind:selecedTeam
+					teamNb="1"
+					pourcent={match.team1_pourcentage}
+					cote={match.team1_cote}
+					display={match.display_pourcentage}
+				/>
+			</div>
+			<div class="mx-10 text-center">
+				<ButtonsVote
+					color="rgb(2, 64, 2)"
+					text="null"
+					bind:selecedTeam
+					teamNb="3"
+					pourcent={match.null_pourcentage}
+					cote={match.null_cote}
+					display={match.display_pourcentage}
+				/>
+			</div>
+			<div class="mx-10 text-center">
+				<ButtonsVote
+					color="#e74c3c"
+					text={match.team2_name}
+					bind:selecedTeam
+					teamNb="2"
+					pourcent={match.team2_pourcentage}
+					cote={match.team2_cote}
+					display={match.display_pourcentage}
+				/>
+			</div>
 		</div>
-		<div class="mx-10 text-center">
-			<ButtonsVote
-				color="rgb(2, 64, 2)"
-				text="null"
-				bind:selecedTeam
-				teamNb="3"
-				pourcent={match.null_pourcentage}
-				cote={match.null_cote}
-				display={match.display_pourcentage}
-			/>
+		<Counter bind:ticktNb />
+		<div class="text-center text-white pt-2 font-thin text-xs">
+			{trad.price}:
 		</div>
-		<div class="mx-10 text-center">
-			<ButtonsVote
-				color="#e74c3c"
-				text={match.team2_name}
-				bind:selecedTeam
-				teamNb="2"
-				pourcent={match.team2_pourcentage}
-				cote={match.team2_cote}
-				display={match.display_pourcentage}
-			/>
+		<div class="text-center text-white font-bold text-3xl -mt-2 italic">
+			{ticktNb * match.ticket_price}<span class="font-semibold italic text-base ">$NFTL</span>
 		</div>
-	</div>
-	<Counter bind:ticktNb />
-	<div class="text-center text-white pt-2 font-thin text-xs">
-		{trad.price}:
-	</div>
-	<div class="text-center text-white font-bold text-3xl -mt-2 italic">
-		{ticktNb * match.ticket_price}<span class="font-semibold italic text-base ">$NFTL</span>
-	</div>
 		<div class="text-center px-30  py-5 ">
 			<button on:click={SendTransactionNFTL} class="drop-shadow-md">
 				<ButtonBuy {trad} />
@@ -391,8 +391,8 @@
 	<div class="w-full text-center mx-auto py-10">
 		<p class="text-white tracking-widest">
 			{#if !hasFinied}
-			{trad.need_more}
-				{:else}
+				{trad.need_more}
+			{:else}
 				Need some $NFTL
 			{/if}
 		</p>

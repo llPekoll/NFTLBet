@@ -12,5 +12,5 @@
 </script>
 
 <section>
-	<Ticket {trad} {ticket}/>
+	<Ticket {trad} {ticket} />
 </section>

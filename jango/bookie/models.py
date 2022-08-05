@@ -1,6 +1,22 @@
 from django.db import models
 
 
+class Trad(models.Model):
+
+    key = models.CharField(max_length=32, unique=True)
+    content = models.TextField()
+
+    def __str__(self):
+        return self.key
+
+
+class Section(models.Model):
+    name = models.CharField(max_length=32, unique=True, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Match(models.Model):
     ticket_price = models.IntegerField(default=300)
     team1_name = models.CharField(max_length=63)
@@ -14,6 +30,10 @@ class Match(models.Model):
     start_match_hour = models.DateTimeField()
 
     display_pourcentage = models.BooleanField(default=True)
+
+    section = models.ForeignKey(
+        Section, related_name="matchs", on_delete=models.CASCADE, blank=True, null=True
+    )
 
     def __str__(self):
         return f"{self.team1_name}_vs_{self.team2_name}"
@@ -37,12 +57,3 @@ class TicketCount(models.Model):
 
     def __str__(self):
         return str(self.bent_on)
-
-
-class Trad(models.Model):
-
-    key = models.CharField(max_length=32, unique=True)
-    content = models.TextField()
-
-    def __str__(self):
-        return self.key

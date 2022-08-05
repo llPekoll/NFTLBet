@@ -26,12 +26,11 @@ SECRET_KEY = "qvsh*8pucko*%^02v-6&w*hwjm%mr0%)0wmfkg-d1f@(vd&p92"
 DEBUG = True
 
 
-
 # Application definition
 
-ALLOWED_HOSTS = ['http://admin.nftlbet.com', 'localhost']
+ALLOWED_HOSTS = ["http://admin.nftlbet.com", "localhost"]
 
-CSRF_TRUSTED_ORIGINS = ['http://admin.nftlbet.com']
+CSRF_TRUSTED_ORIGINS = ["http://admin.nftlbet.com"]
 
 INSTALLED_APPS = [
     "bookie",

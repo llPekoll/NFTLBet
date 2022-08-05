@@ -1,6 +1,12 @@
+from configparser import SectionProxy
 from django.contrib import admin
 
-from .models import Match, Trad, TicketCount
+from .models import Match, Section, Trad, TicketCount
+
+
+@admin.register(Section)
+class SectionAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(Match)

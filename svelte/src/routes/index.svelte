@@ -4,30 +4,30 @@
 
 	import TwitterLink from './components/home/TwitterLink.svelte';
 	import {subContractAbi} from '$lib/abi'
+	import {subContractAddress} from '$lib/subContractAddress'
 	import Items from '$lib/Items.svelte'
 	import Bet from '$lib/Bet.svelte';
 
 	export let trad = {};
 	export let sections = {};
 
-	const subContractAddress = '0x81663d5149cADBbc48CF1a7F21b05719Ee1420A9';
-
-	let provider;
 	let amount = trad.connect;
 	let account;
 	let hasFinied = false;
-
 	const connect = async () => {
+		const provider = new ethers.providers.Web3Provider(window.ethereum);
 		const accounts = await window.ethereum
-			.request({
-				method: 'eth_requestAccounts'
-			})
-			.catch((err) => {
-				console.log(err.code);
-			});
-
+		.request({
+			method: 'eth_requestAccounts'
+		})
+		.catch((err) => {
+			console.log(err.code);
+		});
+		
 		account = accounts[0];
 		let subContract = new ethers.Contract(subContractAddress, subContractAbi, provider);
+		console.log(subContract)
+		console.log(account)
 		let bal = await subContract.balanceOf(account);
 		amount = bal.toString() / Math.pow(10, 9);
 		amount = `${amount.toFixed(2)}`;
@@ -75,8 +75,8 @@
 	
 	{#each sections.sections as {name, content},i}
 	<Items entry={name}>
-		{#each content as {start_match_hour, team1_name, team1_pourcentage, team1_cote, display_pourcentage, null_pourcentage, null_cote, team2_name, team2_pourcentage, team2_cote, ticket_price},i}
-			<Bet {trad} {start_match_hour} {team1_name} {team1_pourcentage} {team1_cote} {display_pourcentage} {null_pourcentage} {null_cote} {team2_name} {team2_pourcentage} {team2_cote}/>
+		{#each content as {start_match_hour, team1_name, team1_pourcentage, team1_cote, display_pourcentage, null_pourcentage, null_cote, team2_name, team2_pourcentage, team2_cote, ticket_price, null_wallet, team2_wallet, team1_wallet, id},i}
+			<Bet {trad} {start_match_hour} {team1_name} {team1_pourcentage} {team1_cote} {display_pourcentage} {null_pourcentage} {null_cote} {team2_name} {team2_pourcentage} {team2_cote} {ticket_price} {null_wallet} {team1_wallet}{team2_wallet} {id}/>
 			
 			
 			

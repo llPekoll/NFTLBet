@@ -7,7 +7,6 @@ export async function post({ request }) {
 	try {
 		const response = await fetch(url, { method: 'POST', body: JSON.stringify(body) });
 		const jose = await response.json();
-		console.log(jose);
 		return {
 			status: 200,
 			body: jose

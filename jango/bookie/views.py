@@ -11,34 +11,30 @@ def get_match(request):
     matches_list = []
     for match in matches:
         m = model_to_dict(match)
-        m["section"] = match.section.name if match.section else "other"
+        m['section'] = match.section.name if match.section else 'other'
         m["start_match_hour"] = datetime.timestamp(m["start_match_hour"])
-
         tickets_all = TicketCount.objects.filter(match=match).aggregate(Sum("amount"))
-
-        if tickets_all.get("amount__sum"):
-            tickets1 = TicketCount.objects.filter(
-                match=match, bent_on="team1"
-            ).aggregate(Sum("amount"))
-            if tickets1.get("amount__sum"):
+        if tickets_all.get('amount__sum'):
+            tickets1 = TicketCount.objects.filter(match=match, bent_on="team1").aggregate(
+                Sum("amount")
+            )
+            if tickets1.get('amount__sum'):
                 pourcent1 = tickets1["amount__sum"] * 100 / tickets_all["amount__sum"]
             else:
                 pourcent1 = 0
-            tickets2 = TicketCount.objects.filter(
-                match=match, bent_on="team2"
-            ).aggregate(Sum("amount"))
-            if tickets2.get("amount__sum"):
+            tickets2 = TicketCount.objects.filter(match=match, bent_on="team2").aggregate(
+                Sum("amount")
+            )
+            if tickets2.get('amount__sum'):
                 pourcent2 = tickets2["amount__sum"] * 100 / tickets_all["amount__sum"]
             else:
                 pourcent2 = 0
-
-            ticketsnull = TicketCount.objects.filter(
-                match=match, bent_on="null"
-            ).aggregate(Sum("amount"))
-            if ticketsnull.get("amount__sum"):
-                pourcentnull = (
-                    ticketsnull["amount__sum"] * 100 / tickets_all["amount__sum"]
-                )
+            
+            ticketsnull = TicketCount.objects.filter(match=match, bent_on="null").aggregate(
+                Sum("amount")
+            )
+            if ticketsnull.get('amount__sum'):
+                pourcentnull = ticketsnull["amount__sum"] * 100 / tickets_all["amount__sum"]
             else:
                 pourcentnull = 0
 
@@ -58,7 +54,14 @@ def get_match(request):
     for section in sections:
         matches = [match for match in matches_list if match["section"] == section]
         secs[section] = matches
-    return JsonResponse(secs)
+    tot = []
+    for k,v in secs.items():
+        res ={
+            'name': k,
+            'content': v
+        }
+        tot.append(res)
+    return JsonResponse({'sections':tot})
 
 
 def get_trad(request):
@@ -92,19 +95,18 @@ def post_ticket(request):
         except Exception as e:
             print(e)
             return JsonResponse({"error": str(e)})
-        return JsonResponse({"id": ticket.id})
-
+        return JsonResponse({"id":ticket.id })
 
 def get_ticket(request, pk):
     ticket = TicketCount.objects.get(pk=pk)
     ticket_dict = model_to_dict(ticket)
-    ticket_dict["address"] = f"{ticket.address[:6]}....{ticket.address[-6:]}"
+    ticket_dict['address'] = f"{ticket.address[:6]}....{ticket.address[-6:]}"
     match = Match.objects.get(pk=ticket.match.id)
-    ticket_dict["team1"] = match.team1_name
-    ticket_dict["team2"] = match.team2_name
-    ticket_dict["winner"] = match.team1_name
-    if ticket.bent_on == "null":
-        ticket_dict["winner"] = "null"
-    if ticket.bent_on == "team2":
-        ticket_dict["winner"] = match.team2_name
+    ticket_dict['team1'] = match.team1_name
+    ticket_dict['team2'] = match.team2_name
+    ticket_dict['winner'] = match.team1_name
+    if ticket.bent_on == 'null':
+        ticket_dict['winner'] = 'null'
+    if ticket.bent_on == 'team2':
+        ticket_dict['winner'] = match.team2_name
     return JsonResponse(ticket_dict)

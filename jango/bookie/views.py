@@ -2,6 +2,7 @@ from django.forms import model_to_dict
 from django.http import JsonResponse
 from datetime import datetime
 from django.db.models import Sum
+import json
 
 from .models import Match, Section, Trad, TicketCount
 
@@ -12,7 +13,7 @@ def get_match(request):
     for match in matches:
         m = model_to_dict(match)
         m['section'] = match.section.name if match.section else 'other'
-        m["start_match_hour"] = datetime.timestamp(m["start_match_hour"])
+        # m["start_match_hour"] = datetime.timestamp(m["start_match_hour"])
         tickets_all = TicketCount.objects.filter(match=match).aggregate(Sum("amount"))
         if tickets_all.get('amount__sum'):
             tickets1 = TicketCount.objects.filter(match=match, bent_on="team1").aggregate(
@@ -72,14 +73,12 @@ def get_trad(request):
 
 def post_ticket(request):
     if request.method == "POST":
-        import json
-
         body_unicode = request.body.decode("utf-8")
         data = json.loads(body_unicode)
         print("data")
         print(data)
-        match = Match.objects.all().latest("start_match_hour")
-        bent_on = "null"
+        match = Match.objects.get(pk=data.get('id'))
+        bent_on = 'null'
         if data["wallet"] == match.team1_wallet:
             bent_on = "team1"
         if data["wallet"] == match.team2_wallet:
@@ -105,8 +104,9 @@ def get_ticket(request, pk):
     ticket_dict['team1'] = match.team1_name
     ticket_dict['team2'] = match.team2_name
     ticket_dict['winner'] = match.team1_name
+    null_trad = Trad.objects.filter(key='null')
     if ticket.bent_on == 'null':
-        ticket_dict['winner'] = 'null'
+        ticket_dict['winner'] = null_trad[0].content
     if ticket.bent_on == 'team2':
         ticket_dict['winner'] = match.team2_name
     return JsonResponse(ticket_dict)

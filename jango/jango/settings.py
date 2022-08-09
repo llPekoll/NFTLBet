@@ -28,9 +28,9 @@ DEBUG = True
 
 # Application definition
 
-ALLOWED_HOSTS = ["http://admin.nftlbet.com", "localhost"]
+ALLOWED_HOSTS = ["https://admin.nftlbet.com", "localhost"]
 
-CSRF_TRUSTED_ORIGINS = ["http://admin.nftlbet.com"]
+CSRF_TRUSTED_ORIGINS = ["https://admin.nftlbet.com"]
 
 INSTALLED_APPS = [
     "bookie",

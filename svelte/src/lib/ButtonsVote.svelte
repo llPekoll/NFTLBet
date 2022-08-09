@@ -24,7 +24,7 @@
 	<p >{text}</p>
 </button>
 {#if display}
-	<div class="flex py-2 md:w-full w-1/3 text-center mx-auto">
+	<div class="flex py-2 md:w-full w-1/5 text-center mx-auto ">
 		<div class="text-xs">{pourcent}%</div>
 		<div class=" jj w-full bg-gray-600 rounded-full h-1.5 ml-1">
 			<div class="bg-gray-200 h-1.5 rounded-full " style="width: {pourcent}% " />

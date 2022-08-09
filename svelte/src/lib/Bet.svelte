@@ -43,18 +43,18 @@
             } else if (selecedTeam === '3') {
                 wallet = null_wallet;
             }
-			// let subContract = new ethers.Contract(
-			// 	subContractAddress,
-			// 	subContractAbi,
-			// 	provider.getSigner()
-			// );
-			// const toPay = ethers.utils.parseUnits(`${bet_value}.0`, 9);
-			// try {
-			// 	let tx = await subContract.transfer(wallet, toPay);
-			// } catch (e) {
-			// 	console.log('error', e);
-			// 	return 0;
-			// }
+			let subContract = new ethers.Contract(
+				subContractAddress,
+				subContractAbi,
+				provider.getSigner()
+			);
+			const toPay = ethers.utils.parseUnits(`${bet_value}.0`, 9);
+			try {
+				let tx = await subContract.transfer(wallet, toPay);
+			} catch (e) {
+				console.log('error', e);
+				return 0;
+			}
 
 			const data = {
 				id,

@@ -19,7 +19,7 @@
 		return ((n % m) + m) % m;
 	}
 </script>
-<div class='mx-10 {display_pourcentage?'-mt-7':'mt-0'}'>
+<div class='mx-10 {display_pourcentage?'-mt-7':'mt-0'} mt-3 md:mt-0 md:mb-0 mb-4'>
 	
 	<div class=" text-white font-bold text-lg italic md:mx-0 md:text-left mx-auto text-center">
 		{ticktNb * ticket_price}<span class="font-thin italic text-xs ">$NFTL</span>

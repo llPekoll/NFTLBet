@@ -28,9 +28,7 @@ DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 # Application definition
 
 ALLOWED_HOSTS = [os.environ.get('DJANGO_URL', ''), "localhost"]
-print(ALLOWED_HOSTS)
-print(os.environ.get('DJANGO_URL', ''))
-CSRF_TRUSTED_ORIGINS = [os.environ.get('DJANGO_URL', '')]
+CSRF_TRUSTED_ORIGINS = [f"https://{os.environ.get('DJANGO_URL', '')}"]
 
 INSTALLED_APPS = [
     "bookie",

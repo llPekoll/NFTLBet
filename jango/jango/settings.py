@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -19,18 +19,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "qvsh*8pucko*%^02v-6&w*hwjm%mr0%)0wmfkg-d1f@(vd&p92"
-
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'default_dev_key_do_not_use_in_production')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 
 # Application definition
 
-ALLOWED_HOSTS = ["http://admin.nftlbet.com", "localhost"]
+ALLOWED_HOSTS = [os.environ.get('DJANGO_URL', ''), "localhost"]
 
-CSRF_TRUSTED_ORIGINS = ["http://admin.nftlbet.com"]
+CSRF_TRUSTED_ORIGINS = [os.environ.get('DJANGO_URL', '')]
 
 INSTALLED_APPS = [
     "bookie",
